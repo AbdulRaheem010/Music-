@@ -1,79 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin Dashboard — Music Library</title>
-  <link rel="stylesheet" href="main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Get Vibes</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <header class="admin-nav">
-    <div style="display:flex;gap:18px;align-items:center">
-      <h2>Admin Dashboard</h2>
-    </div>
-    <div>
-      <button onclick="logout()">Logout</button>
-    </div>
+  <header class="header">
+    <h1>Admin Dashboard</h1>
   </header>
 
-  <main style="padding:24px;">
-    <div class="dashboard" style="display:grid;grid-template-columns:1fr 2fr;gap:20px;">
-      <div>
-        <div class="upload-box">
-          <h3>Upload New Song</h3>
-          <form id="uploadForm" onsubmit="uploadSong(event)">
-            <input id="title" placeholder="Song Title" required />
-            <input id="artist" placeholder="Artist Name" required />
-            <input id="album" placeholder="Album (optional)" />
-            <label style="color:var(--text-muted);font-size:13px">Cover Image</label>
-            <input id="cover" type="file" accept="image/*" required />
-            <label style="color:var(--text-muted);font-size:13px">Song File (mp3/wav)</label>
-            <input id="songFile" type="file" accept="audio/*" required />
-            <textarea id="lyrics" placeholder="Lyrics (optional)" rows="4"></textarea>
-            <button type="submit">Upload Song</button>
-          </form>
-        </div>
-      </div>
+  <main class="admin-container">
+    <section class="upload-section">
+      <h2>Upload New Song</h2>
+      <form id="upload-form">
+        <input type="text" id="title" placeholder="Song Title" required>
+        <input type="text" id="artist" placeholder="Artist Name">
+        <input type="text" id="album" placeholder="Album">
+        <input type="text" id="genre" placeholder="Genre">
+        <textarea id="lyrics" placeholder="Lyrics"></textarea>
+        <input type="file" id="audio" accept=".mp3,.wav,.ogg" required>
+        <input type="file" id="cover" accept=".jpg,.jpeg,.png,.webp">
+        <button type="submit">Upload Song</button>
+        <p id="upload-message"></p>
+      </form>
+    </section>
 
-      <div>
-        <div class="song-list">
-          <h3>Uploaded Songs</h3>
-          <table style="width:100%;border-collapse:collapse;margin-top:8px">
-            <thead>
-              <tr style="text-align:left;color:var(--text-muted)"><th>Cover</th><th>Title</th><th>Artist</th><th>Album</th><th>Action</th></tr>
-            </thead>
-            <tbody id="songRows"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <section class="uploaded-songs-section">
+      <h2>Uploaded Songs</h2>
+      <div id="uploaded-songs-container"></div>
+    </section>
   </main>
-
-  <script>
-    // small helper to render songs table on dashboard (relies on songs array in main.js)
-    function renderDashboard(){
-      const tbody = document.getElementById('songRows');
-      tbody.innerHTML = '';
-      (songs || []).forEach((s, i) => {
-        tbody.insertAdjacentHTML('beforeend', `<tr>
-          <td><img src="${s.cover || '../img/default-cover.png'}" style="width:56px;height:56px;object-fit:cover;border-radius:6px"></td>
-          <td>${s.title}</td>
-          <td>${s.artist}</td>
-          <td>${s.album || ''}</td>
-          <td><button onclick="deleteSong(${i})">Delete</button></td>
-        </tr>`);
-      });
-    }
-
-    // Protect page
-    if(!localStorage.getItem('adminLoggedIn')) {
-      window.location.href = 'login.html';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderDashboard();
-    });
-  </script>
 
   <script src="main.js"></script>
 </body>
