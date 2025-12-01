@@ -1,122 +1,151 @@
-/* ---------------------------------
-   DARK MODE TOGGLE
-----------------------------------*/
-const toggleDarkBtn = document.querySelector(".toggle-dark");
-if (toggleDarkBtn){
-    toggleDarkBtn.addEventListener("click", () => {
-        document.body.classList.toggle("light");
-        localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+const API_BASE = 'https://music-library-backend.onrender.com';
+
+/* ================== DOM ELEMENTS ================== */
+const songsContainer = document.getElementById('songs-container');
+const albumSongsContainer = document.getElementById('album-songs-container');
+const newReleasesContainer = document.getElementById('new-releases-container');
+const albumsContainer = document.getElementById('albums-container');
+
+const audioPlayer = document.getElementById('audio-player');
+const audioTitle = document.getElementById('audio-title');
+const audioCover = document.getElementById('audio-cover');
+const playBtn = document.getElementById('play-btn');
+const pauseBtn = document.getElementById('pause-btn');
+const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
+
+/* ================== GLOBALS ================== */
+let songs = [];
+let currentSongIndex = 0;
+
+/* ================== FETCH FUNCTIONS ================== */
+async function fetchSongs() {
+  if (!songsContainer) return;
+  try {
+    const res = await fetch(`${API_BASE}/api/songs`);
+    songs = await res.json();
+    renderSongs();
+    if (songs.length > 0) loadSong(0);
+  } catch(err){ songsContainer.innerHTML='<p>Failed to load songs.</p>'; }
+}
+
+async function fetchNewReleases() {
+  if(!newReleasesContainer) return;
+  try{
+    const res = await fetch(`${API_BASE}/api/songs?sort=newest&limit=6`);
+    const latest = await res.json();
+    newReleasesContainer.innerHTML='';
+    latest.forEach(song=>{
+      const card=document.createElement('div');
+      card.classList.add('song-card');
+      card.innerHTML=`<img src="${song.coverPath?API_BASE+'/'+song.coverPath:'img/default-cover.png'}" alt="${song.title}"><h3>${song.title}</h3><p>${song.artist}</p>`;
+      card.addEventListener('click',()=>{ loadSongById(song._id); window.location.href='music.html'; });
+      newReleasesContainer.appendChild(card);
     });
+  }catch(err){ newReleasesContainer.innerHTML='<p>Failed to load new releases.</p>'; }
 }
 
-if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light");
-}
-
-/* ---------------------------------
-   TEMP SONG STORAGE (Replace with API)
-----------------------------------*/
-let songs = JSON.parse(localStorage.getItem("songsDB")) || [];
-
-/* ---------------------------------
-   LOAD SONGS INTO GRIDS
-----------------------------------*/
-function loadSongsToGrid(){
-    const grid = document.querySelector("#all-songs, #latest-songs");
-    if (!grid) return;
-
-    grid.innerHTML = "";
-
-    songs.forEach((s, i) => {
-        grid.innerHTML += `
-        <div class="song-card fade" onclick="playSong(${i})">
-            <img src="${s.cover}">
-            <h4 class="song-title">${s.title}</h4>
-            <p>${s.artist}</p>
-        </div>
-        `;
+async function fetchAlbums() {
+  if(!albumsContainer) return;
+  try{
+    const res = await fetch(`${API_BASE}/api/albums`);
+    const albums = await res.json();
+    albumsContainer.innerHTML='';
+    albums.forEach(album=>{
+      const card=document.createElement('div');
+      card.classList.add('album-card');
+      card.innerHTML=`<img src="${album.coverPath?API_BASE+'/'+album.coverPath:'img/default-cover.png'}" alt="${album.name}"><h3>${album.name}</h3><p>${album.artist}</p>`;
+      card.addEventListener('click',()=>{ window.location.href=`album.html?album=${encodeURIComponent(album.name)}`; });
+      albumsContainer.appendChild(card);
     });
-}
-loadSongsToGrid();
-
-/* ---------------------------------
-   ADVANCED PLAYER CONTROLS
-----------------------------------*/
-let currentIndex = 0;
-
-function playSong(i){
-    currentIndex = i;
-    const s = songs[i];
-
-    document.getElementById("player-cover").src = s.cover;
-    document.getElementById("player-title").textContent = s.title;
-    document.getElementById("player-artist").textContent = s.artist;
-
-    const audio = document.getElementById("main-player");
-    audio.src = s.file;
-    audio.play();
+  }catch(err){ albumsContainer.innerHTML='<p>Failed to load albums.</p>'; }
 }
 
-/* Next/Prev */
-function nextSong(){
-    currentIndex = (currentIndex + 1) % songs.length;
-    playSong(currentIndex);
-}
-function prevSong(){
-    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
-    playSong(currentIndex);
+/* ================== RENDER SONGS ================== */
+function renderSongs() {
+  if(!songsContainer) return;
+  songsContainer.innerHTML='';
+  songs.forEach((song,index)=>{
+    const songEl=document.createElement('div');
+    songEl.classList.add('song-item');
+    songEl.innerHTML=`<img src="${song.coverPath?API_BASE+'/'+song.coverPath:'img/default-cover.png'}" class="song-cover"><div class="song-info"><h3>${song.title}</h3><p>${song.artist}</p></div><button class="play-song-btn" data-index="${index}">Play</button>`;
+    songsContainer.appendChild(songEl);
+  });
+  document.querySelectorAll('.play-song-btn').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      const index=parseInt(e.target.dataset.index);
+      loadSong(index);
+      playSong();
+    });
+  });
 }
 
-/* Play-Pause */
-function togglePlay(){
-    const audio = document.getElementById("main-player");
-    audio.paused ? audio.play() : audio.pause();
-}
+/* ================== AUDIO PLAYER ================== */
+function loadSong(index){ currentSongIndex=index; const song=songs[index]; if(!song) return; audioPlayer.src=`${API_BASE}/${song.audioPath}`; audioTitle.textContent=song.title; audioCover.src=song.coverPath?`${API_BASE}/${song.coverPath}`:'img/default-cover.png'; }
+function loadSongById(id){ const index=songs.findIndex(s=>s._id===id); if(index>=0) loadSong(index); }
 
-/* ---------------------------------
-   ADMIN PANEL FUNCTIONS
-----------------------------------*/
-function uploadSong(e){
+function playSong(){ audioPlayer.play(); if(playBtn) playBtn.style.display='none'; if(pauseBtn) pauseBtn.style.display='inline'; }
+function pauseSong(){ audioPlayer.pause(); if(playBtn) playBtn.style.display='inline'; if(pauseBtn) pauseBtn.style.display='none'; }
+function nextSong(){ loadSong((currentSongIndex+1)%songs.length); playSong(); }
+function prevSong(){ loadSong((currentSongIndex-1+songs.length)%songs.length); playSong(); }
+
+if(playBtn) playBtn.addEventListener('click',playSong);
+if(pauseBtn) pauseBtn.addEventListener('click',pauseSong);
+if(nextBtn) nextBtn.addEventListener('click',nextSong);
+if(prevBtn) prevBtn.addEventListener('click',prevSong);
+if(audioPlayer) audioPlayer.addEventListener('ended',nextSong);
+
+/* ================== ADMIN LOGIN ================== */
+const loginForm = document.getElementById('admin-login-form');
+if(loginForm){
+  loginForm.addEventListener('submit',async e=>{
     e.preventDefault();
-
-    const data = {
-        title: title.value,
-        artist: artist.value,
-        cover: URL.createObjectURL(cover.files[0]),
-        file: URL.createObjectURL(songFile.files[0]),
-        lyrics: lyrics.value
-    };
-
-    songs.push(data);
-    localStorage.setItem("songsDB", JSON.stringify(songs));
-    alert("Song uploaded!");
-    location.reload();
+    const email=document.getElementById('email').value;
+    const password=document.getElementById('password').value;
+    const msg=document.getElementById('login-message');
+    try{
+      const res=await fetch(`${API_BASE}/api/auth/login`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,password})
+      });
+      const data=await res.json();
+      if(res.ok){ localStorage.setItem('token',data.token); window.location.href='dashboard.html'; }
+      else msg.textContent=data.message||'Login failed';
+    }catch(err){ msg.textContent='Error connecting to backend'; }
+  });
 }
 
-function deleteSong(i){
-    songs.splice(i, 1);
-    localStorage.setItem("songsDB", JSON.stringify(songs));
-    location.reload();
-}
-
-/* ---------------------------------
-   ADMIN LOGIN
-----------------------------------*/
-function loginAdmin(e){
+/* ================== ADMIN UPLOAD ================== */
+const uploadForm = document.getElementById('upload-form');
+if(uploadForm){
+  uploadForm.addEventListener('submit', async e=>{
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('title',document.getElementById('title').value);
+    formData.append('artist',document.getElementById('artist').value);
+    formData.append('album',document.getElementById('album').value);
+    formData.append('genre',document.getElementById('genre').value);
+    formData.append('lyrics',document.getElementById('lyrics').value);
+    formData.append('audio',document.getElementById('audio').files[0]);
+    const cover=document.getElementById('cover').files[0];
+    if(cover) formData.append('cover',cover);
 
-    const user = username.value;
-    const pass = password.value;
-
-    if (user === "admin" && pass === "admin123"){
-        localStorage.setItem("adminLoggedIn", "true");
-        window.location.href = "dashboard.html";
-    } else {
-        document.getElementById("login-error").textContent = "Invalid Login Details!";
-    }
+    const msg=document.getElementById('upload-message');
+    try{
+      const res=await fetch(`${API_BASE}/api/songs`,{
+        method:'POST',
+        headers:{'Authorization':'Bearer '+localStorage.getItem('token')},
+        body:formData
+      });
+      const data=await res.json();
+      if(res.ok){ msg.textContent='Song uploaded successfully!'; uploadForm.reset(); }
+      else msg.textContent=data.message||'Upload failed';
+    }catch(err){ msg.textContent='Error connecting to backend'; }
+  });
 }
 
-function logout(){
-    localStorage.removeItem("adminLoggedIn");
-    window.location.href = "login.html";
-}
+/* ================== INIT ================== */
+fetchSongs();
+fetchNewReleases();
+fetchAlbums();
