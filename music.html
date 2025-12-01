@@ -1,40 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Vibes - Music Library</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Get Vibes — Music</title>
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <header class="header">
-    <h1>🎵 Music Library</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="album.html">Albums</a>
-      <a href="login.html">Admin</a>
-    </nav>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">Get<span>Vibes</span></div></div>
+      <nav class="side-nav">
+        <a class="nav-item" href="index.html">Home</a>
+        <a class="nav-item active" href="music.html">Music</a>
+        <a class="nav-item" href="album.html">Albums</a>
+        <a class="nav-item" href="login.html">Admin</a>
+      </nav>
+      <div class="sidebar-footer">© 2025 Get Vibes</div>
+    </aside>
 
-  <main class="songs-container" id="songs-container">
-    <!-- Songs dynamically loaded -->
-  </main>
-
-  <footer class="audio-player-container">
-    <div class="player">
-      <img id="audio-cover" src="img/default-cover.png" alt="Cover" class="player-cover">
-      <div class="player-info">
-        <h3 id="audio-title">Select a song</h3>
-        <div class="player-controls">
-          <button id="prev-btn" class="control-btn">⏮️</button>
-          <button id="play-btn" class="control-btn">▶️</button>
-          <button id="pause-btn" class="control-btn" style="display:none;">⏸️</button>
-          <button id="next-btn" class="control-btn">⏭️</button>
+    <main class="main">
+      <header class="topbar">
+        <div class="search-wrap">
+          <input id="music-search" class="search" placeholder="Search songs or artists..." />
         </div>
+        <div class="actions">
+          <button id="theme-toggle-2" aria-label="Toggle theme">🌓</button>
+        </div>
+      </header>
+
+      <section class="music-grid-wrap">
+        <aside class="filters">
+          <h3>Filters</h3>
+          <div class="filter-item">
+            <label>Genre</label>
+            <select id="genre-filter"><option value="">All</option></select>
+          </div>
+        </aside>
+
+        <section class="songs-grid-section">
+          <div class="section-head">
+            <h2>All Songs</h2>
+            <div id="songs-count" class="muted"></div>
+          </div>
+          <div id="songs-grid" class="rows-grid"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- Player footer (same as index) -->
+  <div class="player-footer" id="player-footer">
+    <div class="player-inner">
+      <img id="pf-cover" class="pf-cover" src="img/default-cover.png" alt="cover">
+      <div class="pf-meta">
+        <div id="pf-title">No track selected</div>
+        <div id="pf-artist" class="muted">—</div>
       </div>
-      <audio id="audio-player" style="display:none;"></audio>
+      <div class="pf-controls">
+        <button id="pf-prev" class="control">⏮</button>
+        <button id="pf-play" class="control">▶</button>
+        <button id="pf-pause" class="control" style="display:none">⏸</button>
+        <button id="pf-next" class="control">⏭</button>
+      </div>
+      <div class="pf-range">
+        <input id="pf-seek" type="range" min="0" value="0">
+        <div class="pf-times"><span id="pf-current">00:00</span> / <span id="pf-duration">00:00</span></div>
+      </div>
     </div>
-  </footer>
+  </div>
 
   <script src="main.js"></script>
 </body>
