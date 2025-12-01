@@ -1,39 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Admin Dashboard — Get Vibes</title>
-  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div class="app admin-app">
     <aside class="sidebar">
       <div class="brand"><div class="logo">Get<span>Vibes</span></div></div>
       <nav class="side-nav">
-        <a class="nav-item" href="../index.html">Home</a>
-        <a class="nav-item" href="../music.html">Music</a>
-        <a class="nav-item" href="../album.html">Albums</a>
-        <a class="nav-item" href="../admin/login.html">Sign out</a>
+        <a class="nav-item" href="index.html"><i>🏠</i><span>Home</span></a>
+        <a class="nav-item" href="music.html"><i>🎧</i><span>Music</span></a>
+        <a class="nav-item" href="album.html"><i>📀</i><span>Albums</span></a>
+        <a class="nav-item" href="login.html"><i>🔐</i><span>Sign out</span></a>
       </nav>
     </aside>
 
     <main class="main admin-main">
-      <header class="topbar">
-        <h2>Upload New Track</h2>
-      </header>
+      <header class="topbar"><h2>Upload New Track</h2></header>
 
-      <section class="admin-section">
-        <form id="upload-form" class="upload-form">
+      <section class="admin-section" style="padding:20px">
+        <form id="upload-form" class="upload-form card">
           <div class="grid-2">
-            <label>Title <input id="title" required></label>
-            <label>Artist <input id="artist"></label>
-            <label>Album <input id="album"></label>
-            <label>Genre <input id="genre"></label>
+            <label>Title <input id="title" required /></label>
+            <label>Artist <input id="artist" /></label>
+            <label>Album <input id="album" /></label>
+            <label>Genre <input id="genre" /></label>
           </div>
+
           <label>Lyrics <textarea id="lyrics"></textarea></label>
-          <label>Audio File <input id="audio" type="file" accept="audio/*" required></label>
-          <label>Cover Image <input id="cover" type="file" accept="image/*"></label>
+          <label>Audio File <input id="audio" type="file" accept="audio/*" required /></label>
+          <label>Cover Image <input id="cover" type="file" accept="image/*" /></label>
+
           <div class="form-actions">
             <button type="submit" class="btn primary">Upload</button>
             <span id="upload-message" class="muted"></span>
@@ -41,13 +40,13 @@
         </form>
       </section>
 
-      <section class="admin-section">
+      <section class="admin-section" style="padding:20px">
         <h3>Uploaded Tracks</h3>
-        <div id="uploaded-list" class="rows-grid"></div>
+        <div id="uploaded-list"></div>
       </section>
     </main>
   </div>
 
-  <script src="../main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
