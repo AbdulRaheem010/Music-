@@ -4,21 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Vibes - Home</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <header class="header">
     <h1>🎵 Get Vibes Music Library</h1>
     <nav>
       <a href="music.html">Music</a>
-      <a href="admin-login.html">Admin</a>
+      <a href="album.html">Albums</a>
+      <a href="login.html">Admin</a>
     </nav>
   </header>
 
   <main class="home-content">
-    <h2>Welcome to Get Vibes!</h2>
-    <p>Discover, play, and manage your favorite music.</p>
-    <a class="btn" href="music.html">Go to Music Library</a>
+    <section class="new-releases">
+      <h2>New Releases</h2>
+      <div id="new-releases-container" class="cards-container">
+        <!-- New releases loaded dynamically -->
+      </div>
+    </section>
+
+    <section class="featured-albums">
+      <h2>Featured Albums</h2>
+      <div id="albums-container" class="cards-container">
+        <!-- Albums loaded dynamically -->
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
