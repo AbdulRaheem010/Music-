@@ -1,83 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Album — Music Library</title>
-  <link rel="stylesheet" href="main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Vibes - Album</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">Music<span>Library</span></div>
-    <nav class="nav-links">
+  <header class="header">
+    <h1>Albums</h1>
+    <nav>
       <a href="index.html">Home</a>
       <a href="music.html">Music</a>
       <a href="login.html">Admin</a>
     </nav>
-    <div>
-      <button class="toggle-dark" aria-label="Toggle theme">Toggle</button>
-    </div>
   </header>
 
-  <main>
-    <section class="section" id="album-details">
-      <div class="album-header" style="display:flex;gap:20px;align-items:center">
-        <img id="album-cover" src="img/default-cover.png" alt="album cover" style="width:160px;height:160px;border-radius:12px;object-fit:cover">
-        <div>
-          <h2 id="album-title">Album Title</h2>
-          <p id="album-artist" style="color:var(--text-muted)">Album Artist</p>
-          <p id="album-desc" style="max-width:700px;margin-top:8px;color:var(--text-muted)">Album description goes here — release date, notes, credits, etc.</p>
-        </div>
-      </div>
-
-      <h3 style="margin-top:18px">Tracklist</h3>
-      <ul id="tracklist" style="list-style:none;padding:0;margin-top:12px"></ul>
-    </section>
+  <main class="album-songs-container" id="album-songs-container">
+    <!-- Songs of selected album loaded dynamically -->
   </main>
 
-  <!-- Player -->
-  <div class="advanced-player" id="advanced-player" aria-hidden="false">
-    <img id="player-cover" class="cover-art" src="img/default-cover.png" alt="cover art">
-    <div style="min-width:220px;">
-      <div id="player-title">No song selected</div>
-      <div id="player-artist" style="color:var(--text-muted);font-size:13px">—</div>
+  <footer class="audio-player-container">
+    <div class="player">
+      <img id="audio-cover" src="img/default-cover.png" alt="Cover" class="player-cover">
+      <div class="player-info">
+        <h3 id="audio-title">Select a song</h3>
+        <div class="player-controls">
+          <button id="prev-btn" class="control-btn">⏮️</button>
+          <button id="play-btn" class="control-btn">▶️</button>
+          <button id="pause-btn" class="control-btn" style="display:none;">⏸️</button>
+          <button id="next-btn" class="control-btn">⏭️</button>
+        </div>
+      </div>
+      <audio id="audio-player" style="display:none;"></audio>
     </div>
-
-    <audio id="main-player" preload="metadata"></audio>
-
-    <div class="controls">
-      <button onclick="prevSong()" aria-label="Previous">⏮</button>
-      <button id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">▶</button>
-      <button onclick="nextSong()" aria-label="Next">⏭</button>
-    </div>
-
-    <input id="seekSlider" type="range" min="0" value="0" />
-
-    <div class="time">
-      <span id="currentTime">00:00</span>
-      <span id="duration">00:00</span>
-    </div>
-  </div>
-
-  <script>
-    // album page renderer (reads a first album from songs list if available)
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!window.songs || !songs.length) return;
-      // simple grouping by album name
-      const albumName = songs[0].album || 'Untitled Album';
-      const albumSongs = songs.filter(s => (s.album || 'Untitled Album') === albumName);
-      document.getElementById('album-title').textContent = albumName;
-      document.getElementById('album-artist').textContent = albumSongs[0].artist || 'Various Artists';
-      document.getElementById('album-cover').src = albumSongs[0].cover || 'img/default-cover.png';
-      const list = document.getElementById('tracklist');
-      albumSongs.forEach((t, i) => {
-        list.insertAdjacentHTML('beforeend', `<li style="padding:12px;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center;">
-          <div><strong>${i+1}. ${t.title}</strong><div style="color:var(--text-muted);font-size:13px">${t.artist}</div></div>
-          <div><button onclick="playSong(${songs.indexOf(t)})">Play</button></div>
-        </li>`);
-      });
-    });
-  </script>
+  </footer>
 
   <script src="main.js"></script>
 </body>
