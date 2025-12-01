@@ -1,34 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Get Vibes — Home</title>
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="logo">Get<span>Vibes</span></div>
-      </div>
+      <div class="brand"><div class="logo">Get<span>Vibes</span></div></div>
       <nav class="side-nav">
-        <a class="nav-item active" href="index.html">Home</a>
-        <a class="nav-item" href="music.html">Music</a>
-        <a class="nav-item" href="album.html">Albums</a>
-        <a class="nav-item" href="login.html">Admin</a>
+        <a class="nav-item active" href="index.html"><i>🏠</i><span>Home</span></a>
+        <a class="nav-item" href="music.html"><i>🎧</i><span>Music</span></a>
+        <a class="nav-item" href="album.html"><i>📀</i><span>Albums</span></a>
+        <a class="nav-item" href="login.html"><i>🔐</i><span>Admin Login</span></a>
       </nav>
-      <div class="sidebar-footer">© 2025 Get Vibes</div>
+      <div class="sidebar-footer muted">© 2025 Get Vibes</div>
     </aside>
 
     <main class="main">
       <header class="topbar">
-        <div class="search-wrap">
-          <input id="global-search" class="search" placeholder="Search songs, artists, albums..." />
-        </div>
-        <div class="actions">
-          <button id="theme-toggle" aria-label="Toggle theme">🌓</button>
-        </div>
+        <input id="global-search" class="search" placeholder="Search songs, artists, albums..." />
+        <div class="actions"><button id="theme-toggle">🌓</button></div>
       </header>
 
       <section class="home-hero">
@@ -36,30 +29,21 @@
           <h1>Discover music that moves you</h1>
           <p class="muted">Stream, upload and share — built for creators and fans.</p>
         </div>
-        <div class="hero-right">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23121'/%3E%3Ctext x='50%25' y='50%25' fill='%23ff6a00' font-size='24' font-family='Arial' text-anchor='middle' dy='.3em'%3EGet Vibes%3C/text%3E%3C/svg%3E" alt="">
-        </div>
+        <div class="hero-right"><img alt="hero graphic" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23121'/%3E%3Ctext x='50%25' y='50%25' fill='%231DB954' font-size='24' font-family='Arial' text-anchor='middle' dy='.3em'%3EGet Vibes%3C/text%3E%3C/svg%3E"></div>
       </section>
 
       <section class="section">
-        <div class="section-head">
-          <h2>New Releases</h2>
-          <a class="view-all" href="music.html">View all</a>
-        </div>
+        <div class="section-head"><h2>New Releases</h2><a class="view-all" href="music.html">View all</a></div>
         <div id="new-releases" class="cards-grid"></div>
       </section>
 
       <section class="section">
-        <div class="section-head">
-          <h2>Featured Albums</h2>
-          <a class="view-all" href="album.html">Browse albums</a>
-        </div>
+        <div class="section-head"><h2>Featured Albums</h2><a class="view-all" href="album.html">Browse albums</a></div>
         <div id="featured-albums" class="cards-grid"></div>
       </section>
     </main>
   </div>
 
-  <!-- Player (global footer) -->
   <div class="player-footer" id="player-footer">
     <div class="player-inner">
       <img id="pf-cover" class="pf-cover" src="img/default-cover.png" alt="cover">
