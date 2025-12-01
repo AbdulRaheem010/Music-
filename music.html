@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Music Library — All Songs</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Music<span>Library</span></div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="music.html" class="active">Music</a>
+      <a href="admin/login.html">Admin</a>
+    </nav>
+    <div>
+      <button class="toggle-dark" aria-label="Toggle theme">Toggle</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2 class="section-title">All Songs</h2>
+
+      <div style="max-width:900px;margin:0 auto 20px;">
+        <input id="search" type="search" placeholder="Search by title or artist..." style="width:100%;padding:12px;border-radius:10px;background:var(--glass);border:1px solid #333;color:var(--text)">
+      </div>
+
+      <div id="all-songs" class="songs-grid"></div>
+    </section>
+  </main>
+
+  <!-- Player (same as index.html) -->
+  <div class="advanced-player" id="advanced-player" aria-hidden="false">
+    <img id="player-cover" class="cover-art" src="img/default-cover.png" alt="cover art">
+    <div style="min-width:220px;">
+      <div id="player-title">No song selected</div>
+      <div id="player-artist" style="color:var(--text-muted);font-size:13px">—</div>
+    </div>
+
+    <audio id="main-player" preload="metadata"></audio>
+
+    <div class="controls">
+      <button onclick="prevSong()" aria-label="Previous">⏮</button>
+      <button id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">▶</button>
+      <button onclick="nextSong()" aria-label="Next">⏭</button>
+    </div>
+
+    <input id="seekSlider" type="range" min="0" value="0" />
+
+    <div class="time">
+      <span id="currentTime">00:00</span>
+      <span id="duration">00:00</span>
+    </div>
+  </div>
+
+  <script>
+    // small search binding that filters rendered grid (works with songs array in main.js)
+    document.addEventListener('input', (e) => {
+      if (e.target && e.target.id === 'search') {
+        const q = e.target.value.toLowerCase();
+        const filtered = (songs || []).filter(s => (s.title||'').toLowerCase().includes(q) || (s.artist||'').toLowerCase().includes(q));
+        renderGrid(filtered);
+      }
+    });
+
+    // renderGrid used by main.js. If not defined yet, define fallback.
+    function renderGrid(list){
+      const grid = document.getElementById('all-songs') || document.getElementById('latest-songs');
+      if(!grid) return;
+      grid.innerHTML = '';
+      list.forEach((s,i) => {
+        const idx = songs.indexOf(s);
+        grid.insertAdjacentHTML('beforeend', `
+          <div class="song-card fade" onclick="playSong(${idx})">
+            <img src="${s.cover || 'img/default-cover.png'}" alt="cover">
+            <h4 class="song-title">${s.title}</h4>
+            <p style="color:var(--text-muted);font-size:13px">${s.artist}</p>
+          </div>
+        `);
+      });
+    }
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

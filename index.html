@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Music Library — Home</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Music<span>Library</span></div>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="music.html">Music</a>
+      <a href="admin/login.html">Admin</a>
+    </nav>
+    <div>
+      <button class="toggle-dark" aria-label="Toggle theme">Toggle</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Discover Your Sound</h1>
+        <p>Stream, upload and share — built for musicians & listeners.</p>
+        <a class="btn" href="music.html">Explore Music</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Latest Releases</h2>
+      <div id="latest-songs" class="songs-grid"></div>
+    </section>
+  </main>
+
+  <!-- Advanced Player (shared across pages) -->
+  <div class="advanced-player" id="advanced-player" aria-hidden="false">
+    <img id="player-cover" class="cover-art" src="img/default-cover.png" alt="cover art">
+    <div style="min-width:220px;">
+      <div id="player-title">No song selected</div>
+      <div id="player-artist" style="color:var(--text-muted);font-size:13px">—</div>
+    </div>
+
+    <audio id="main-player" preload="metadata"></audio>
+
+    <div class="controls">
+      <button onclick="prevSong()" aria-label="Previous">⏮</button>
+      <button id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">▶</button>
+      <button onclick="nextSong()" aria-label="Next">⏭</button>
+    </div>
+
+    <input id="seekSlider" type="range" min="0" value="0" />
+
+    <div class="time">
+      <span id="currentTime">00:00</span>
+      <span id="duration">00:00</span>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

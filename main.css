@@ -1,0 +1,293 @@
+/* ------------------------------
+   GLOBAL RESET + VARIABLES
+--------------------------------*/
+:root {
+    --primary: #ff4081;
+    --bg: #0d0d0d;
+    --card: #161616;
+    --text: #ffffff;
+    --text-muted: #bbbbbb;
+    --glass: rgba(255,255,255,0.08);
+    --transition: 0.35s ease;
+}
+
+/* Dark mode override */
+body.light {
+    --bg: #f8f8f8;
+    --card: #ffffff;
+    --text: #111;
+    --text-muted: #444;
+    --glass: rgba(0,0,0,0.08);
+}
+
+/* Boilerplate */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: var(--transition);
+}
+
+/* Smooth fade-in */
+.fade {
+    animation: fadeIn 1s ease forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------
+   NAVBAR
+--------------------------------*/
+.navbar, .admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 5%;
+    background: var(--card);
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+}
+.logo span { color: var(--primary); }
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.nav-links a:hover,
+.nav-links .active {
+    color: var(--primary);
+}
+
+/* Dark mode toggle */
+.toggle-dark {
+    background: none;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: var(--transition);
+}
+.toggle-dark:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* ------------------------------
+   HERO SECTION
+--------------------------------*/
+.hero {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: url('../assets/hero.jpg') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+}
+
+.hero-content {
+    z-index: 2;
+    animation: fadeInUp 1s ease forwards;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.btn {
+    padding: 10px 20px;
+    background: var(--primary);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: var(--transition);
+}
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* ------------------------------
+   GRID DISPLAY
+--------------------------------*/
+.section {
+    padding: 50px 5%;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.songs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 25px;
+}
+
+.song-card {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+.song-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 15px rgba(255,64,129,0.3);
+}
+
+.song-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.song-title {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* ------------------------------
+   ADVANCED MUSIC PLAYER
+--------------------------------*/
+.advanced-player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: var(--card);
+    border-top: 2px solid var(--primary);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 200;
+    backdrop-filter: blur(10px);
+}
+
+.cover-art {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    animation: fadeIn 0.6s ease;
+}
+
+.controls button {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.controls button:hover {
+    color: var(--primary);
+    transform: scale(1.2);
+}
+
+#seekSlider {
+    width: 180px;
+}
+
+.time {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* ------------------------------
+   ADMIN PANELS
+--------------------------------*/
+.login-container,
+.upload-box,
+.song-list {
+    background: var(--card);
+    padding: 25px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    animation: fadeIn 0.7s ease;
+}
+
+input, textarea, select {
+    width: 100%;
+    background: var(--glass);
+    border: 1px solid #333;
+    padding: 12px;
+    color: var(--text);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: var(--transition);
+}
+input:focus, textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(255,64,129,0.4);
+}
+
+button {
+    background: var(--primary);
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+button:hover {
+    transform: scale(1.05);
+}
+
+/* ------------------------------
+   RESPONSIVENESS
+--------------------------------*/
+@media(max-width: 768px){
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .advanced-player {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+    }
+
+    #seekSlider {
+        width: 100%;
+    }
+}
