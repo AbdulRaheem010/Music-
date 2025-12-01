@@ -1,22 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login - Get Vibes</title>
-  <link rel="stylesheet" href="main.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Login — Get Vibes</title>
+  <link rel="stylesheet" href="../main.css">
 </head>
 <body>
-  <div class="login-container">
-    <h2>Admin Login</h2>
-    <form id="admin-login-form">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-      <p id="login-message"></p>
-    </form>
+  <div class="center-page">
+    <div class="card login-card">
+      <h2>Admin Sign In</h2>
+      <form id="admin-login-form">
+        <label class="label">Email
+          <input id="admin-email" type="email" required>
+        </label>
+        <label class="label">Password
+          <input id="admin-password" type="password" required>
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Sign In</button>
+        </div>
+        <p id="login-message" class="muted"></p>
+      </form>
+    </div>
   </div>
 
-  <script src="main.js"></script>
+  <script src="../main.js"></script>
 </body>
 </html>
