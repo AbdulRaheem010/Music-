@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Get Vibes — Album</title>
   <link rel="stylesheet" href="main.css">
 </head>
@@ -11,22 +10,17 @@
     <aside class="sidebar">
       <div class="brand"><div class="logo">Get<span>Vibes</span></div></div>
       <nav class="side-nav">
-        <a class="nav-item" href="index.html">Home</a>
-        <a class="nav-item" href="music.html">Music</a>
-        <a class="nav-item active" href="album.html">Albums</a>
-        <a class="nav-item" href="login.html">Admin</a>
+        <a class="nav-item" href="index.html"><i>🏠</i><span>Home</span></a>
+        <a class="nav-item" href="music.html"><i>🎧</i><span>Music</span></a>
+        <a class="nav-item active" href="album.html"><i>📀</i><span>Albums</span></a>
+        <a class="nav-item" href="login.html"><i>🔐</i><span>Admin Login</span></a>
       </nav>
-      <div class="sidebar-footer">© 2025 Get Vibes</div>
     </aside>
 
     <main class="main">
       <header class="topbar">
-        <div class="search-wrap">
-          <input id="album-search" class="search" placeholder="Search albums..." />
-        </div>
-        <div class="actions">
-          <button id="theme-toggle-3" aria-label="Toggle theme">🌓</button>
-        </div>
+        <input id="album-search" class="search" placeholder="Search albums..." />
+        <div class="actions"><button id="theme-toggle-3">🌓</button></div>
       </header>
 
       <section class="section">
@@ -35,18 +29,12 @@
           <a id="back-to-albums" href="index.html" class="view-all">Back</a>
         </div>
 
-        <div id="album-info" class="album-info">
-          <!-- album cover + meta -->
-        </div>
-
-        <div id="album-songs" class="rows-grid">
-          <!-- album songs -->
-        </div>
+        <div id="album-info" class="album-info"></div>
+        <div id="album-songs" class="rows-grid"></div>
       </section>
     </main>
   </div>
 
-  <!-- Player footer -->
   <div class="player-footer" id="player-footer">
     <div class="player-inner">
       <img id="pf-cover" class="pf-cover" src="img/default-cover.png" alt="cover">
